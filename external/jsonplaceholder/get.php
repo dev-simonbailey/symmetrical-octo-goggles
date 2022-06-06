@@ -17,12 +17,12 @@ $results = json_decode($response, true);
 foreach ($results as $keys => $values) {
     $userName = explode(" ", $values['name']);
     $query = "  INSERT INTO deepstore.customer_list_service (`client_id`, `customer_first`, `customer_last`, `username`, `password`)
-                SELECT 'MAT','" . $userName[0] . "', '" . $userName[1] . "','" . $values['email'] . "','" . $values['username'] . "' FROM DUAL
+                SELECT 'JSONPLACEHOLDER','" . $userName[0] . "', '" . $userName[1] . "','" . strtolower($values['email']) . "','" . $values['username'] . "' FROM DUAL
                 WHERE NOT EXISTS (SELECT * FROM customer_list_service 
-                        WHERE client_id='MAT' 
+                        WHERE client_id='JSONPLACEHOLDER' 
                         AND customer_first = '" . $userName[0] . "'
                         AND customer_last = '" . $userName[1] . "' 
-                        AND username = '" . $values['email'] . "'
+                        AND username = '" . strtolower($values['email']) . "'
                         AND password = '" . $values['username'] . "'
                         LIMIT 1)";
 

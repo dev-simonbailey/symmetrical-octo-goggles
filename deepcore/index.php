@@ -2,7 +2,6 @@
 require_once(__DIR__ . "/../deepstore/meekro.php");
 $method = $_SERVER['REQUEST_METHOD'];
 $data = json_decode(file_get_contents('php://input'), true);
-
 if (!empty($data['help'])) {
     $helpPath = __DIR__ . '/../'
         . $data["routing"] . "/"
@@ -10,7 +9,6 @@ if (!empty($data['help'])) {
     include($helpPath);
     exit();
 }
-
 if (!empty($data["routing"]) && !empty($data["version"])) {
     $servicePath = __DIR__ . '/../'
         . $data["routing"] . "/"
