@@ -1,8 +1,8 @@
 <?php
 
 $allowedRoutes = [
-    'customer-list-service',
-    'login-service',
-    'registration-service',
-    'site-advertising-service'
+    "CustomerListService" => "customer-list-service",
+    "LoginService" => "login-service",
+    "RegistrationService" => "registration-service",
+    "SiteAdvertisingService" => "site_advertising-service"
 ];
