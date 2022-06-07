@@ -1,19 +1,24 @@
 <?php
-require_once(__DIR__ . "/../deepstore/meekro.php");
+
 $method = $_SERVER['REQUEST_METHOD'];
 $data = json_decode(file_get_contents('php://input'), true);
 
+$routing = sanitizeData($data["routing"]);
+$version = sanitizeData($data["version"]);
+$rootDIR =  dirname(__DIR__) . "/";
+require_once($rootDIR . "deepstore/meekro.php");
+
 if (!empty($data['help'])) {
-    $helpPath = __DIR__ . '/../'
-        . $data["routing"] . "/"
+    $helpPath = $rootDIR
+        . $routing . "/"
         . "help.php";
     include($helpPath);
     exit();
 }
 if (!empty($data["routing"]) && !empty($data["version"])) {
-    $servicePath = __DIR__ . '/../'
-        . $data["routing"] . "/"
-        . $data["version"] . "/"
+    $servicePath = $rootDIR
+        . $routing . "/"
+        . $version . "/"
         . strtolower($method) . ".php";
 } else {
     header("Content-Type: application/json");
@@ -22,7 +27,7 @@ if (!empty($data["routing"]) && !empty($data["version"])) {
     echo json_encode($errorArray);
     exit();
 }
-include(__DIR__ . "/api.php");
+include($rootDIR . "/deepcore/api.php");
 switch ($method) {
     case "PUT":
         if (!file_exists($servicePath)) {
@@ -53,7 +58,7 @@ switch ($method) {
     default:
         header("Content-Type: application/json");
         http_response_code(405);
-        echo "ERROR -> No Available Method Found -> " . htmlspecialchars($data["routing"],  ENT_QUOTES, 'UTF-8');
+        echo "ERROR -> No Available Method Found -> " . $routing;
         exit();
         break;
 }
@@ -65,4 +70,9 @@ function routeError($method, $version)
     $errorArray[0]['Error'] = 'Method (' . $method . ') not available on this route with version number: ' . $version;
     echo json_encode($errorArray);
     exit();
+}
+
+function sanitizeData($data)
+{
+    return htmlspecialchars($data,  ENT_QUOTES, 'UTF-8');
 }
