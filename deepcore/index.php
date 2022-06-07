@@ -4,7 +4,7 @@ require_once($rootDIR . "routes.php");
 $method = htmlspecialchars($_SERVER['REQUEST_METHOD'],  ENT_QUOTES, 'UTF-8');
 $data = json_decode(file_get_contents('php://input'), true);
 $routing = htmlspecialchars($data["routing"],  ENT_QUOTES, 'UTF-8');
-$v1 = explode("-", $data['version']);
+$v1 = explode("-", htmlspecialchars($data["version"],  ENT_QUOTES, 'UTF-8'));
 $version = implode(".", $v1);
 
 
