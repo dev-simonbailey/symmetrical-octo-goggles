@@ -12,7 +12,7 @@ if (!empty($data['help'])) {
     $helpPath = $rootDIR
         . $routing . "/"
         . "help.php";
-    include($helpPath);
+    require_once($helpPath);
     exit();
 }
 if (!empty($data["routing"]) && !empty($data["version"])) {
@@ -27,7 +27,7 @@ if (!empty($data["routing"]) && !empty($data["version"])) {
     echo json_encode($errorArray);
     exit();
 }
-include($rootDIR . "/deepcore/api.php");
+require_once($rootDIR . "/deepcore/api.php");
 switch ($method) {
     case "PUT":
         if (!file_exists($servicePath)) {
@@ -62,7 +62,7 @@ switch ($method) {
         exit();
         break;
 }
-include($servicePath);
+require_once($servicePath);
 function routeError($method, $version)
 {
     header("Content-Type: application/json");
