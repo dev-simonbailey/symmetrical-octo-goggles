@@ -6,8 +6,6 @@ $method = htmlspecialchars($_SERVER['REQUEST_METHOD'],  ENT_QUOTES, 'UTF-8');
 $data = json_decode(file_get_contents('php://input'), true);
 $routing = htmlspecialchars($data["routing"],  ENT_QUOTES, 'UTF-8');
 $version = htmlspecialchars($data["version"],  ENT_QUOTES, 'UTF-8');
-
-
 if (array_key_exists($routing, $allowedRoutes)) {
     $route = $rootDIR . "/" . $allowedRoutes[$routing] . "/";
 } else {
@@ -17,7 +15,6 @@ if (array_key_exists($routing, $allowedRoutes)) {
     echo json_encode($errorArray);
     exit();
 }
-
 if (array_key_exists($version, $allowedVersion)) {
     $route .= $allowedVersion[$version] . "/";
 } else {
@@ -27,8 +24,6 @@ if (array_key_exists($version, $allowedVersion)) {
     echo json_encode($errorArray);
     exit();
 }
-
-
 require_once($rootDIR . "deepstore/meekro.php");
 if (!empty(htmlspecialchars($data["help"],  ENT_QUOTES, 'UTF-8'))) {
     $helpPath = $route . "help.php";
@@ -42,7 +37,6 @@ if (empty($route) && empty($version)) {
     echo json_encode($errorArray);
     exit();
 }
-
 require_once($rootDIR . "/deepcore/api.php");
 switch ($method) {
     case "PUT":
