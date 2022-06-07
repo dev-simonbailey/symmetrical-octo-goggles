@@ -1,13 +1,17 @@
 <?php
-
+$rootDIR =  dirname(__DIR__) . "/";
+require_once($rootDIR . "routes.php");
 $method = $_SERVER['REQUEST_METHOD'];
 $data = json_decode(file_get_contents('php://input'), true);
-
 $routing = sanitizeData($data["routing"]);
+if (!in_array($routing, $allowedRoutes, false)) {
+    header("Content-Type: application/json");
+    http_response_code(405);
+    echo "ERROR -> No Available Route Found -> " . $routing;
+    exit();
+}
 $version = sanitizeData($data["version"]);
-$rootDIR =  dirname(__DIR__) . "/";
 require_once($rootDIR . "deepstore/meekro.php");
-
 if (!empty($data['help'])) {
     $helpPath = $rootDIR
         . $routing . "/"
@@ -70,7 +74,6 @@ function routeError($method, $version)
     echo json_encode($errorArray);
     exit();
 }
-
 function sanitizeData($data)
 {
     return htmlspecialchars($data,  ENT_QUOTES, 'UTF-8');
