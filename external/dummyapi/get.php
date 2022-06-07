@@ -23,7 +23,7 @@ foreach ($results as $keys => $values) {
     foreach ($values as $key => $value) {
 
         $userName = strtolower($value['firstName']) . "." . strtolower($value['lastName']);
-        $passWord = MD5($value['firstName'] . $value['lastName'] . $value['id]']);
+        $passWord = MD5($value['firstName'] . $value['lastName'] . $value['id']);
 
         $query = "  INSERT INTO deepstore.customer_list_service (`client_id`, `customer_first`, `customer_last`, `username`, `password`)
         SELECT 'DUMMYAPI','" . $value['firstName'] . "', '" . $value['lastName'] . "','" . $userName . "','" . substr($passWord, -16) . "' FROM DUAL
