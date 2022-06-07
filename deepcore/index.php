@@ -2,6 +2,7 @@
 require_once(__DIR__ . "/../deepstore/meekro.php");
 $method = $_SERVER['REQUEST_METHOD'];
 $data = json_decode(file_get_contents('php://input'), true);
+
 if (!empty($data['help'])) {
     $helpPath = __DIR__ . '/../'
         . $data["routing"] . "/"
@@ -52,7 +53,7 @@ switch ($method) {
     default:
         header("Content-Type: application/json");
         http_response_code(405);
-        echo "ERROR -> No Available Method Found -> " . $data["routing"];
+        echo "ERROR -> No Available Method Found -> " . htmlspecialchars($data["routing"],  ENT_QUOTES, 'UTF-8');
         exit();
         break;
 }
