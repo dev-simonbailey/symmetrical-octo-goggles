@@ -38,7 +38,6 @@ switch ($method) {
         if (!file_exists($servicePath)) {
             routeError($method, $data['version']);
         }
-        include($servicePath);
         break;
     case "PATCH":
         if (!file_exists($servicePath)) {
