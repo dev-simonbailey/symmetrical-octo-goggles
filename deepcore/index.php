@@ -1,7 +1,7 @@
 <?php
-$rootDIR =  dirname(__DIR__) . "/";
-require_once($rootDIR . "routes.php");
-require_once($rootDIR . "versions.php");
+$rootDIR =  dirname(__DIR__);
+require_once($rootDIR . "/routes.php");
+require_once($rootDIR . "/versions.php");
 $method = htmlspecialchars($_SERVER['REQUEST_METHOD'],  ENT_QUOTES, 'UTF-8');
 $data = json_decode(file_get_contents('php://input'), true);
 $routing = htmlspecialchars($data["routing"],  ENT_QUOTES, 'UTF-8');
@@ -24,12 +24,12 @@ if (array_key_exists($version, $allowedVersion)) {
     echo json_encode($errorArray);
     exit();
 }
-require_once($rootDIR . "deepstore/meekro.php");
-if (!empty(htmlspecialchars($data["help"],  ENT_QUOTES, 'UTF-8'))) {
+if (isset($data["help"])) {
     $helpPath = $route . "help.php";
     require_once($helpPath);
     exit();
 }
+require_once($rootDIR . "/deepstore/meekro.php");
 if (empty($route) && empty($version)) {
     header("Content-Type: application/json");
     http_response_code(400);
