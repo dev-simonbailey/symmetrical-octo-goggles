@@ -26,6 +26,13 @@ if (array_key_exists($version, $allowedVersion)) {
 }
 if (isset($data["help"])) {
     $helpPath = $route . "help.php";
+    if (!file_exists($helpPath)) {
+        header("Content-Type: application/json");
+        http_response_code(405);
+        $errorArray[0]['Error'] = 'HELP is not available on this route with version number: ' . $version;
+        echo json_encode($errorArray);
+        exit();
+    }
     require_once($helpPath);
     exit();
 }
