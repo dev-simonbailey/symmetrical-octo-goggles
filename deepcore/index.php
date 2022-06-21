@@ -15,8 +15,8 @@ if (array_key_exists($routing, $allowedRoutes)) {
     echo json_encode($errorArray);
     exit();
 }
-if (array_key_exists($version, $allowedVersion)) {
-    $route .= $allowedVersion[$version] . "/";
+if (array_key_exists($version, $allowedVersions)) {
+    $route .= $allowedVersions[$version] . "/";
 } else {
     header("Content-Type: application/json");
     http_response_code(405);
