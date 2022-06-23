@@ -1,5 +1,20 @@
 <?php
 error_reporting(E_ALL);
+if (!isset($data['username'], $data['password'])) {
+    header("Content-Type: application/json");
+    http_response_code(400);
+    $errorArray[0]['Error'] = 'Either the Username or Password field was not found. Please check your JSON payload.';
+    echo json_encode($errorArray);
+    exit();
+}
+if (empty($data['username']) || empty($data['password'])) {
+    header("Content-Type: application/json");
+    http_response_code(400);
+    $errorArray[0]['Error'] = 'Either the Username or Password value was not found.';
+    $errorArray[1]['Message'] = 'Please check your JSON payload.';
+    echo json_encode($errorArray);
+    exit();
+}
 $query = "SELECT id FROM customer_list_service 
 WHERE username = '" . $data['username'] . "' 
 AND password = '" . $data['password'] . "'";
