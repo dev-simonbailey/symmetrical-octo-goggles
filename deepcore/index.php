@@ -45,7 +45,7 @@ if (array_key_exists($route, $allowedRoutes)) {
  * If the requested resource version is allowed, then add to routePath, otherwise error
  */
 if (array_key_exists($version, $allowedVersions)) {
-    $routePath .= $version . "/";
+    $routePath .= $allowedVersions[$version] . "/";
 } else {
     header("Content-Type: application/json");
     errorHandler(405, "No Available Version Found -> " . $version);
