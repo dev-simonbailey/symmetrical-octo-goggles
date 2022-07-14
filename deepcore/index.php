@@ -12,7 +12,9 @@ require_once($rootDIR . "/routes.php");
  * Require the version whitelist
  */
 require_once($rootDIR . "/versions.php");
-
+/**
+ * Require the error logging
+ */
 require_once($rootDIR . "/deepcore/error-logging.php");
 /**
  * Cleanse the REQUEST_METHOD

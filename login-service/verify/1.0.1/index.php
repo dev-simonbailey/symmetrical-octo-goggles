@@ -5,6 +5,7 @@ if (!isset($data['username'], $data['password'])) {
     http_response_code(400);
     $errorArray[0]['Error'] = 'Either the Username or Password field was not found. Please check your JSON payload.';
     echo json_encode($errorArray);
+    writeError(400, 'Either the Username or Password field was not found.', $action, $route, $version);
     exit();
 }
 if (empty($data['username']) || empty($data['password'])) {
@@ -13,9 +14,9 @@ if (empty($data['username']) || empty($data['password'])) {
     $errorArray[0]['Error'] = 'Either the Username or Password value was not found.';
     $errorArray[1]['Message'] = 'Please check your JSON payload.';
     echo json_encode($errorArray);
+    writeError(400, 'Either the Username or Password value was not found.', $action, $route, $version);
     exit();
 }
-
 $query = "SELECT id FROM customer_list_service 
 WHERE username = BINARY '" . $data['username'] . "' 
 AND password = BINARY '" . $data['password'] . "'";
@@ -26,6 +27,7 @@ if (empty($result)) {
     http_response_code(400);
     $errorArray[0]['Error'] = 'No records found.';
     echo json_encode($errorArray);
+    writeError(400, 'No records found', $action, $route, $version);
     exit();
 }
 echo json_encode($result);
